@@ -1,0 +1,120 @@
+body {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+
+.main {
+  position: relative;
+
+  flex-basis: 80%;
+  margin: 8em auto;
+  min-width: 850px;
+}
+
+.heading {
+  background-color: rgb(255, 102, 0);
+  position: relative;
+  padding: 1.3em 3em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.title,
+.button {
+  display: inline-block;
+}
+
+.title {
+  margin-right: 2em;
+  font-weight: 900;
+  font-size: 1.3em;
+}
+
+.button {
+  padding: 0 5px;
+  color: rgb(0, 26, 255);
+  font-weight: 700;
+}
+
+.users {
+  float: right;
+  color: whitesmoke;
+  padding: 0 10px;
+}
+
+.button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+}
+
+.body {
+  position: relative;
+  min-height: 300px;
+  background-color: whitesmoke;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 2em 3em;
+}
+
+#form {
+  margin: 2em 5em 6em 4em;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.body-content {
+  margin: 2em 0;
+  font-size: 1.2em;
+}
+
+.title-list {
+  padding-left: 0.8em;
+  padding-right: 0.5em;
+}
+.url-list {
+  color: gray !important;
+  font-size: 0.8em;
+}
+
+.url-list:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.fa-star {
+  cursor: pointer;
+}
+
+.list a {
+  color: black;
+  text-decoration: none;
+}
+
+.list a:hover {
+  color: blue;
+}
+
+.login-err-msg,
+.signup-err-msg {
+  text-align: center;
+  color: red;
+}
+
+.newStories,
+.favorites {
+  display: none;
+}
+
+#logout-msg {
+  text-align: center;
+  color: rgb(9, 196, 9);
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Hack or Snooze</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  
+</head>
+<body>
+    <div class="container main">
+     
+        <div class="heading">
+          <div class="title"><strong> Hack or Snooze </strong></div>
+        
+          <div class="button newStories" data-toggle="collapse" data-target="#submitStory">New Story</div>
+          
+          <!-- <span id="seperator"> | </span> -->
+          
+          <div class="button favorites">Favorites</div>
+          
+          <div class="button users" id="signup-btn" data-toggle="modal" data-target="#signup">SignUp</div>
+          <div class="button users" id="login-btn" data-toggle="modal" data-target="#login">Login</div> 
+          
+        </div>
+
+        <!-- login modal -->
+        <div class="modal fade login-modal" id="login" tabindex="-1" role="dialog" aria-labelledby="login-md" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="login-md">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body loginForm">
+                  <div class="login-err-msg"></div>
+                  <form id="form">
+                      <div class="form-group row">
+                        <label for="login_username">Username:</label>
+                        <input type="text" class="form-control" id="login_username" placeholder="please enter username" required>
+                      </div>
+    
+                      <div class="form-group row">
+                        <label for="login_password">Password:</label>
+                        <input type="password" class="form-control" id="login_password" placeholder="please enter the password" required>
+                       
+                      </div>
+
+                      <button type="submit" class="btn btn-primary float-right ml-2">Submit</button>
+                      <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                          
+    
+                   </form>
+          
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- logout msg -->
+        <div class="modal fade logout-modal" id="logout" tabindex="-1" role="dialog" aria-labelledby="logout-md" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+
+                <div class="modal-body">
+                    
+                    <div class="modal-body">
+                        <div id="logout-msg">You have successfully logged out!</div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+            
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        <div class="modal fade signup-modal" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <div class="modal-body signupForm">
+                  <div class="signup-err-msg"></div>
+                <form id="form">
+                    <div class="form-group row">
+                        <label for="signup_name">Name:</label>
+                        <input type="text" class="form-control" id="signup_name" placeholder="please enter your name" required>
+                      </div>
+
+                    <div class="form-group row">
+                      <label for="signup_username">Username:</label>
+                      <input type="text" class="form-control" id="signup_username" placeholder="please enter username" required>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="signup_password">Password:</label>
+                      <input type="password" class="form-control" id="signup_password" placeholder="please enter the password" required>
+                    
+                    </div>
+
+                    <button type="submit" class="btn btn-primary float-right ml-2">Submit</button>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                        
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+     
+
+        <div class="body">
+            <div class="collapse form" id="submitStory">
+              <form id="form">
+                  <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label">Title:</label>
+                    <input type="text" class="form-control col-sm-10" id="inputTitle" placeholder="please enter title" required>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="inputAuthor" class="col-sm-2 col-form-label">Author:</label>
+                    <input type="text" class="form-control col-sm-10" id="inputAuthor" placeholder="please enter the author" required>
+                   
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="url" class="col-sm-2 col-form-label">URL:</label>
+                    <input type="url" class="form-control col-sm-10" id="url" placeholder="please enter url" required>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary float-right">Submit</button>
+              </form>
+            </div>
+            <div class="body-content">
+              <ol class="list">
+
+              </ol>
+
+            </div>
+        </div>
+
+    </div>
+
+ 
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+
+  
+</body>
+</html>
