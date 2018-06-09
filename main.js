@@ -1,4 +1,5 @@
 let favStoryIDs = new Set();
+let count = 0;
 
 $(function() {
   fetchFav().then(() => {
@@ -17,16 +18,24 @@ $(function() {
 });
 
 function displayUserInfo() {
+  $('#userinfo').empty();
   $('#userinfo')
     .append($('<h5>').text(`Full Name:  ${localStorage.getItem('fullname')}`))
     .append($('<h5>').text(`User Name:  ${localStorage.getItem('username')}`));
+
+  $('#update_fullname').val(localStorage.getItem('fullname'));
 }
 
 function fetchStories() {
   let starClass;
+  let limit = count > 0 ? 10 : 20;
+
   return $
-    .getJSON('https://hack-or-snooze.herokuapp.com/stories?skip=0&limit=20')
+    .getJSON(
+      `https://hack-or-snooze.herokuapp.com/stories?skip=${count}&limit=${limit}`
+    )
     .then(function(data) {
+      limit === 20 ? (count += 20) : (count += 10);
       data.data.forEach(function(name) {
         starClass = favStoryIDs.has(name.storyId)
           ? 'fas fa-star'
@@ -110,6 +119,7 @@ function fetchFav() {
     });
 }
 
+//click Brand to go back to home page
 $('.title').click(function() {
   $('.body-content').show();
   $('.profile-content').hide();
@@ -141,7 +151,10 @@ function logIn(event) {
         $('#signup-btn').hide();
         $('#login-btn').text('Log Out');
 
-        fetchStories().then(() => $('.fa-star').css('display', 'inline-block'));
+        fetchStories().then(() => {
+          count = 0;
+          $('.fa-star').css('display', 'inline-block');
+        });
 
         $('.newStories, .profile').css('display', 'inline-block');
         displayUserInfo();
@@ -202,13 +215,14 @@ function greetingTime() {
 
 function profile() {
   let greeting = greetingTime();
-  let firstName = localStorage.getItem('fullname');
+  let firstName = localStorage.getItem('fullname').split(' ')[0];
   $('.profile').click(function() {
-    $('.body-content').hide();
-    $('.profile-content').show();
+    $('.body-content').css('display', 'none');
+    $('.profile-content').css('display', 'block');
     $('.greeting').text(`${greeting}, ${firstName}`);
     $('.myStroylist').empty();
     listMyPostedStories();
+    listMyFavStories();
   });
 }
 
@@ -253,10 +267,7 @@ $('#login-btn').on('click', function() {
     $('.profile-content').hide();
     $('.body-content').css('display', 'block');
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('fullname');
-    localStorage.removeItem('storyid');
+    localStorage.clear();
 
     favStoryIDs.clear();
 
@@ -334,6 +345,69 @@ function submitStory(event) {
     });
 }
 
+function listMyFavStories() {
+  let starClass;
+  $('.favStorylist').empty();
+  $.ajax({
+    url: `https://hack-or-snooze.herokuapp.com/users/${localStorage.getItem(
+      'username'
+    )}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+    .then(resp => {
+      resp.data.favorites.forEach(story => {
+        starClass = favStoryIDs.has(story.storyId)
+          ? 'fas fa-star'
+          : 'far fa-star';
+        $('.favStorylist').append(
+          $('<li>')
+            .append(
+              $('<i>')
+                .addClass(starClass)
+                .click(function(e) {
+                  $(e.target).toggleClass('fas fa-star far fa-star');
+                  if ($(e.target).hasClass('fas')) {
+                    favorite(story.storyId, 'POST');
+                    favStoryIDs.add(story.storyId);
+                  } else {
+                    favorite(story.storyId, 'DELETE');
+                    favStoryIDs.delete(story.storyId);
+                  }
+                  $('.list').empty();
+                  fetchStories().then(() => {
+                    count = 0;
+                    $('.fa-star').css('display', 'inline-block');
+                  });
+                })
+            )
+            .append(
+              $('<a>')
+                .attr('href', `${story.url}`)
+                .text(story.title)
+            )
+            .append(
+              $('<span>')
+                .addClass('url-list')
+                .text(
+                  `( ${story.url
+                    .match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i)[1]
+                    .replace('www.', '')} )`
+                )
+            )
+        );
+      });
+
+      $('.fa-star').css('display', 'inline-block');
+      console.log(resp.data.stories);
+    })
+    .catch(errs => console.log(errs));
+}
+
 function listMyPostedStories() {
   $('.myStorylist').empty();
   $.ajax({
@@ -355,8 +429,8 @@ function listMyPostedStories() {
               $('<a>')
                 .attr('href', `${story.url}`)
                 .text(
-                  story.title.length > 30
-                    ? story.title.substring(0, 30) + '... '
+                  story.title.length > 35
+                    ? story.title.substring(0, 35) + '... '
                     : story.title
                 )
             )
@@ -381,7 +455,7 @@ function listMyPostedStories() {
             .append(
               $(
                 '<i class="fas fa-edit text-primary" data-toggle="modal" data-target="#editStory"></i>'
-              ).click(function(event) {
+              ).click(function() {
                 //prefill inputs
                 $('#editTitle').val(story.title);
                 $('#editAuthor').val(story.author);
@@ -421,6 +495,7 @@ function editStory(event) {
     .then(resp => {
       $('.editStory-modal').modal('hide');
       $('.list').empty();
+      count = 0;
       fetchStories();
       listMyPostedStories();
       console.log(resp);
@@ -448,7 +523,52 @@ function deleteStory(storyID) {
     .catch(errs => console.log(errs));
 }
 
+function updateInfo(event) {
+  event.preventDefault();
+  let updatedFullName = $('#update_fullname').val();
+  let updatePassWord = $('#update_password').val();
+  var d = {
+    data: {
+      name: updatedFullName,
+      password: updatePassWord
+    }
+  };
+
+  $.ajax({
+    url: `https://hack-or-snooze.herokuapp.com/users/${localStorage.getItem(
+      'username'
+    )}`,
+    method: 'PATCH',
+    dataType: 'json',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    },
+    data: JSON.stringify(d)
+  })
+    .then(resp => {
+      localStorage.setItem('fullname', updatedFullName);
+      let firstName = updatedFullName.split(' ')[0];
+      $('.greeting').text(`${greetingTime()}, ${firstName}`);
+      $('.helloMsg').text(`Hi, ${firstName}`);
+      displayUserInfo();
+      $('#update_password').val('');
+      console.log(resp);
+    })
+    .catch(errs => console.log(errs));
+}
+
+window.onscroll = function() {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    fetchStories().then(() => {
+      if (localStorage.getItem('token'))
+        $('.fa-star').css('display', 'inline-block');
+    });
+  }
+};
+
 $('.loginForm > form').submit(logIn);
 $('.signupForm > form').submit(signUp);
 $('#submitStory > form').submit(submitStory);
 $('.editStoryForm > form').submit(editStory);
+$('.update_userInfo > form').submit(updateInfo);

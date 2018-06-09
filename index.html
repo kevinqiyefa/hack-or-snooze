@@ -185,7 +185,7 @@
                           </div>
                           
   
-                        <button type="submit" class="btn btn-primary float-right ml-2 editStorySub">Submit</button>
+                        <button type="submit" class="btn btn-primary float-right ml-2 editStorySub">Edit</button>
                         <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                             
       
@@ -229,10 +229,26 @@
                                     <hr class="style8">
                                   </div>
                                   <div id="scroll2" class="text-center">
-                                    <h2>Update Login Info</h2>
-                                    <p>
-                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis unde officiis itaque ut hic officia aliquid consequuntur dignissimos libero temporibus magni voluptatibus ducimus ad, nobis ab? Inventore numquam aspernatur aperiam!
-                                    </p>
+                                    <h2>Update User Info</h2>
+                                    
+                                    <div class="update_userInfo">
+                                      <form id="form">
+                                          <div class="form-group row">
+                                            <label for="update_fullname">Full Name:</label>
+                                            <input type="text" class="form-control" id="update_fullname" required>
+                                          </div>
+                        
+                                          <div class="form-group row">
+                                            <label for="update_password">New Password:</label>
+                                            <input type="password" class="form-control" id="update_password" placeholder="Please enter a new password" required>
+                                          
+                                          </div>
+                    
+                                          <button type="submit" class="btn btn-primary float-right">Update</button>
+
+                                      </form>
+                                    </div>
+
                                     <hr class="style8">
                                   </div>
                                   <div id="scroll3" class="text-center">
@@ -257,7 +273,7 @@
                         </h5>
                       </div>
                       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
+                        <div class="card-body myFavStory">
                             <div id="favStoriesHeader" class="text-center"><h3>My Favorite Stories</h3></div>
                             
                             <ol class="favStorylist">
