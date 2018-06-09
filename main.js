@@ -120,7 +120,12 @@ function fetchFav() {
 }
 
 //click Brand to go back to home page
-$('.title').click(function() {
+$('.title').on('click', function() {
+  count = 0;
+  $('.list').empty();
+  fetchStories().then(() => {
+    $('.fa-star').css('display', 'inline-block');
+  });
   $('.body-content').show();
   $('.profile-content').hide();
 });
@@ -215,7 +220,7 @@ function greetingTime() {
 function profile() {
   let greeting = greetingTime();
   let firstName = localStorage.getItem('fullname').split(' ')[0];
-  $('.profile').click(function() {
+  $('.profile').on('click', function() {
     $('.body-content').css('display', 'none');
     $('.profile-content').css('display', 'block');
     $('.greeting').text(`${greeting}, ${firstName}`);
@@ -267,6 +272,7 @@ $('#login-btn').on('click', function() {
     $('.body-content').css('display', 'block');
     count = 0;
 
+    $('#submitStory').collapse('hide');
     localStorage.clear();
 
     favStoryIDs.clear();
