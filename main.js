@@ -144,7 +144,7 @@ function logIn(event) {
       getFirstNameAndAppend(user_name);
       fetchFav().then(() => {
         $('.list').empty();
-
+        count = 0;
         $('.login-msg').hide();
 
         //UI after login.
@@ -152,7 +152,6 @@ function logIn(event) {
         $('#login-btn').text('Log Out');
 
         fetchStories().then(() => {
-          count = 0;
           $('.fa-star').css('display', 'inline-block');
         });
 
@@ -266,6 +265,7 @@ $('#login-btn').on('click', function() {
     $('#userinfo').empty();
     $('.profile-content').hide();
     $('.body-content').css('display', 'block');
+    count = 0;
 
     localStorage.clear();
 
