@@ -7,8 +7,8 @@ body {
   position: relative;
 
   flex-basis: 80%;
-  margin: 8em auto;
-  min-width: 850px;
+  margin: 5em auto;
+  min-width: 870px;
 }
 
 .heading {
@@ -30,6 +30,10 @@ body {
   font-size: 1.3em;
 }
 
+.title:hover {
+  cursor: pointer;
+}
+
 .button {
   padding: 0 5px;
   color: rgb(0, 26, 255);
@@ -47,6 +51,12 @@ body {
   cursor: pointer;
   font-weight: 700;
   color: white;
+}
+
+.helloMsg {
+  padding: 0 10px;
+  float: right;
+  color: whitesmoke;
 }
 
 .body {
@@ -81,25 +91,31 @@ body {
   font-size: 0.8em;
 }
 
-.url-list:hover {
+/* .url-list:hover {
   cursor: pointer;
   text-decoration: underline;
-}
+} */
 
 li {
   margin-bottom: 10px;
 }
 
 .fa-star {
+  display: none;
+}
+
+.fa-star:hover {
   cursor: pointer;
 }
 
-.list a {
+.list a,
+.myStorylist a {
   color: black;
   text-decoration: none;
 }
 
-.list a:hover {
+.list a:hover,
+.myStorylist a:hover {
   color: blue;
 }
 
@@ -110,11 +126,81 @@ li {
 }
 
 .newStories,
-.favorites {
+.profile {
   display: none;
 }
 
 #logout-msg {
   text-align: center;
   color: rgb(9, 196, 9);
+}
+
+.profile-content {
+  display: none;
+  margin: 3em auto;
+}
+
+.greeting {
+  margin-bottom: 1.5em;
+}
+
+.scrollspy-example {
+  position: relative;
+  height: 350px;
+  overflow: auto;
+}
+
+#userinfo {
+  margin: 2em 0 6em 0;
+  color: grey;
+}
+
+hr.style8 {
+  border-top: 1px solid #8c8b8b;
+  border-bottom: 1px solid #fff;
+  margin-top: 10em;
+}
+hr.style8:after {
+  content: '';
+  display: block;
+  margin-top: 2px;
+  border-top: 1px solid #8c8b8b;
+  border-bottom: 1px solid #fff;
+}
+
+#scroll1,
+#scroll2,
+#scroll3 {
+  margin: 6em 0;
+}
+
+.mystories {
+  margin-bottom: 2em;
+}
+
+#mystoriesHeader {
+  margin: 2em;
+}
+
+.myStorylist {
+  margin: 1em 3em;
+  font-size: 1.2em;
+}
+
+.fa-trash-alt {
+  padding-left: 3em;
+  color: red;
+}
+
+.fa-edit {
+  padding-left: 2em;
+}
+
+.fa-trash-alt:hover,
+.fa-edit:hover {
+  cursor: pointer;
+}
+
+.editS {
+  max-width: 70%;
 }
