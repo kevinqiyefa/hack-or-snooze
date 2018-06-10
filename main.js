@@ -7,7 +7,7 @@ $(function() {
       if (localStorage.getItem('token') && localStorage.getItem('username')) {
         $('#signup-btn').hide();
         $('#login-btn').text('Log Out');
-        profile();
+        profileInfo();
         displayUserInfo();
         $('.newStories, .profile').css('display', 'inline-block');
         getFirstNameAndAppend(localStorage.getItem('username'));
@@ -56,6 +56,8 @@ function fetchStories() {
                     favorite(name.storyId, 'DELETE');
                     favStoryIDs.delete(name.storyId);
                   }
+                  //update profile info
+                  profileInfo();
                 })
             )
             .append(
@@ -128,6 +130,8 @@ $('.title').on('click', function() {
   });
   $('.body-content').show();
   $('.profile-content').hide();
+  //update profile info
+  profileInfo();
 });
 
 function logIn(event) {
@@ -161,6 +165,7 @@ function logIn(event) {
         });
 
         $('.newStories, .profile').css('display', 'inline-block');
+        profileInfo();
         displayUserInfo();
 
         $('.loginForm > form')[0].reset();
@@ -217,18 +222,19 @@ function greetingTime() {
   return greetingMsg;
 }
 
-function profile() {
+function profileInfo() {
   let greeting = greetingTime();
   let firstName = localStorage.getItem('fullname').split(' ')[0];
-  $('.profile').on('click', function() {
-    $('.body-content').css('display', 'none');
-    $('.profile-content').css('display', 'block');
-    $('.greeting').text(`${greeting}, ${firstName}`);
-    $('.myStroylist').empty();
-    listMyPostedStories();
-    listMyFavStories();
-  });
+
+  $('.greeting').text(`${greeting}, ${firstName}`);
+  listMyPostedStories();
+  listMyFavStories();
 }
+
+$('.profile').on('click', function() {
+  $('.body-content').css('display', 'none');
+  $('.profile-content').css('display', 'block');
+});
 
 function signUp(event) {
   event.preventDefault();
@@ -268,7 +274,7 @@ $('#login-btn').on('click', function() {
     $('.newStories, .profile').css('display', 'none');
     $('.helloMsg').remove();
     $('#userinfo').empty();
-    $('.profile-content').hide();
+    $('.profile-content').css('display', 'none');
     $('.body-content').css('display', 'block');
     count = 0;
 
