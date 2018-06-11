@@ -50,14 +50,17 @@ function fetchStories() {
                 .click(function(e) {
                   $(e.target).toggleClass('fas fa-star far fa-star');
                   if ($(e.target).hasClass('fas')) {
-                    favorite(name.storyId, 'POST');
+                    favorite(name.storyId, 'POST').then(() => {
+                      profileInfo();
+                    });
                     favStoryIDs.add(name.storyId);
                   } else {
-                    favorite(name.storyId, 'DELETE');
+                    favorite(name.storyId, 'DELETE').then(() => {
+                      profileInfo();
+                    });
                     favStoryIDs.delete(name.storyId);
                   }
                   //update profile info
-                  profileInfo();
                 })
             )
             .append(
@@ -83,7 +86,7 @@ function fetchStories() {
 }
 
 function favorite(sId, method) {
-  $.ajax({
+  return $.ajax({
     url: `https://hack-or-snooze.herokuapp.com/users/${localStorage.getItem(
       'username'
     )}/favorites/${sId}`,
@@ -93,9 +96,7 @@ function favorite(sId, method) {
       'content-type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`
     }
-  })
-    .then(resp => console.log(resp))
-    .catch(errs => console.log(errs));
+  });
 }
 
 function fetchFav() {
