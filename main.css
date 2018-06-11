@@ -97,7 +97,7 @@ body {
 } */
 
 li {
-  margin-bottom: 10px;
+  padding: 5px;
 }
 
 .fa-star {
@@ -208,4 +208,12 @@ hr.style8:after {
 
 .favStorylist {
   margin: 3em 0 2em 0;
+}
+
+ol > li:nth-child(odd) {
+  background-color: white;
+}
+
+#submitStory {
+  padding-bottom: 2em;
 }
